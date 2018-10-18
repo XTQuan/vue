@@ -1,0 +1,41 @@
+<html>
+
+<head>
+    <title>test </title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        {{message}}
+        <span v-if="seen">aaa</span>
+        <ol>
+            <li v-for="todo in todos">
+                {{ todo.text}}
+            </li>
+        </ol>
+        <button v-on:click="reverseMessage">逆转消息</button>
+        <input v-model="message"></input>
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                message: "test",
+                seen:'true',
+                todos:[
+                    {text:1},
+                    {text:12},
+                    {text:3333},
+                ]
+            },
+            methods:{
+                reverseMessage:function(){
+                    this.message = this.message +"aaaaaaaa";
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
