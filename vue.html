@@ -7,7 +7,7 @@
 
 <body>
     <div id="app">
-        {{message}}
+        {{message | test}}
         <span v-if="seen">aaa</span>
         <ol>
             <li v-for="todo in todos">
@@ -16,25 +16,48 @@
         </ol>
         <button v-on:click="reverseMessage">逆转消息</button>
         <input v-model="message"></input>
+            <ul>
+                <todo-item 
+                    v-for="b in todos"
+                   v-bind:a ="b"></todo-item>
+                
+            </ul>
+       
+        <button v-on:click="setVisible">Visible</button>
     </div>
     <script>
+        Vue.filter("test",function(a){
+            return a+'111';
+        });
+        Vue.component('todo-item', {
+            props: ['a'],
+            template: '<li>{{ a.text }}</li>'
+        });
         var app = new Vue({
             el: '#app',
             data: {
                 message: "test",
-                seen:'true',
-                todos:[
-                    {text:1},
-                    {text:12},
-                    {text:3333},
+                seen: false,
+                todos: [{
+                        text: 1
+                    },
+                    {
+                        text: 12
+                    },
+                    {
+                        text: 3333
+                    },
                 ]
             },
-            methods:{
-                reverseMessage:function(){
-                    this.message = this.message +"aaaaaaaa";
+            methods: {
+                reverseMessage: function () {
+                    this.message = this.message + "aaaaaaaa";
+                },
+                setVisible: function () {
+                    this.seen = !this.seen;
                 }
             }
-        })
+        });
     </script>
 </body>
 

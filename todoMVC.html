@@ -1,0 +1,88 @@
+<html>
+
+<head>
+    <title>test </title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <link type="text/css" rel="styleSheet"  href="style/todoMVC.css" />
+</head>
+<div id="todoMvc">
+    <div id="header"class="header">
+        <h1>todo</h1>
+        <input type="checkbox" v-model="allDone">selectall</input>
+        <input @keyup.enter="addNewTodo(newTodo)" v-model="newTodo" class="newTodo" type="text"></input>
+    </div>
+    <div>
+        <ul >
+            <li v-for="todo in todos" :key='todo.id'>
+                <input type="checkbox" v-model="todo.completed"/>
+                <label>{{todo.title}}</label>
+                <button @click="removeTodo(todo)">remove</button> 
+            </li>
+        </ul>
+        <p>{{remaining}}</p>
+    </div>
+    <div>
+
+    </div>
+</div>
+
+<body>
+    <script>
+        var todos =[
+            {
+                id:'1',
+                title:"test1",
+                completed:true
+            },
+            {
+                id:'2',
+                title:"test2",
+                completed:true
+            },{
+                id:'3',
+                title:"test3",
+                completed:false
+            }
+        ]
+
+        var vm = new Vue({
+            data:{
+                todos:todos,
+                newTodo:""
+            },
+            computed:{
+                allDone:{
+                    get:function(){
+                        return this.remaining === 0;
+                    },
+                    set:function(value){
+                        this.todos.forEach(todo => {
+                            todo.completed=value;
+                        });
+                    }
+                },
+                remaining:function(){
+                    var a =this.todos.filter(function(todo){
+                        return !todo.completed
+                    });
+                    return a.length
+                }
+            },
+            methods:{
+                removeTodo:function(todo){
+                    this.todos.splice(this.todos.indexOf(todo),1);
+                },
+                addNewTodo:function(newTodo){
+                    this.todos.push({
+                        id : this.todos.length+1,
+                        title:newTodo,
+                        completed:false
+                    })
+                }
+            }
+        })
+        vm.$mount('#todoMvc')
+    </script>
+</body>
+
+</html>

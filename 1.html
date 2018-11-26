@@ -1,0 +1,65 @@
+<html>
+
+<head>
+    <title>test </title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="blog-post-demo">
+        <blog-post v-for="post in posts" v-bind:key="post.id" v-bind:title="post.title">
+                Your Profile
+        </blog-post>
+    </div>
+    <div id="customer">
+            <custom-input  v-model="searchText"></custom-input>
+            {{searchText}}
+
+    </div>
+    
+    <script>
+        Vue.component('blog-post', {
+            props: ['title'],
+            template: '<h3>{{ title }}<slot></slot></h3>'
+        })
+        new Vue({
+            el: '#blog-post-demo',
+            data: {
+                posts: [{
+                        id: 1,
+                        title: 'My journey with Vue'
+                    },
+                    {
+                        id: 2,
+                        title: 'Blogging with Vue'
+                    },
+                    {
+                        id: 3,
+                        title: 'Why Vue is so fun'
+                    }
+                ]
+            }
+        })
+
+
+        Vue.component('custom-input', {
+            props: ['value'],
+            template: `
+                        <input
+                        v-bind:value="value"
+                        v-on:input="$emit('input', $event.target.value)"
+                        >
+                     `
+        })
+        new Vue({
+            el: '#customer',
+            data: {
+                searchText:'123455'
+               
+            }
+        })
+
+    </script>
+</body>
+
+</html>
